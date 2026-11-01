@@ -1,0 +1,35 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+int main() {
+    ifstream file("expenses.txt");
+    string date, category, description, amount;
+    string month;
+    double total = 0, money;
+    int count = 0;
+
+    cout << "Enter month (YYYY-MM): ";
+    cin >> month;
+
+    while (getline(file, date, '|')) {
+        getline(file, category, '|');
+        getline(file, description, '|');
+        getline(file, amount);
+
+        if (date.substr(0, 7) == month) {
+            money = stod(amount);
+            total += money;
+            count++;
+        }
+    }
+
+    file.close();
+
+    cout << "\nMonthly Report: " << month << endl;
+    cout << "Number of expenses: " << count << endl;
+    cout << "Total expenditure: Rs. " << total << endl;
+
+    return 0;
+}
