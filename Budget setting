@@ -1,0 +1,22 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    double budget;
+
+    cout << "Enter monthly budget (Rs.): ";
+    cin >> budget;
+
+    if (budget <= 0) {
+        cout << "Please enter a valid budget.\n";
+        return 0;
+    }
+
+    ofstream file("budget.txt");
+    file << budget;
+    file.close();
+
+    cout << "Monthly budget saved successfully!\n";
+    return 0;
+}
