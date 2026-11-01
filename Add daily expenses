@@ -1,0 +1,35 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+int main() {
+    string date, category, description;
+    double amount;
+
+    cout << "Enter date (YYYY-MM-DD): ";
+    cin >> date;
+
+    cout << "Enter category (Food, Travel, etc.): ";
+    cin >> category;
+
+    cin.ignore();
+    cout << "Enter description: ";
+    getline(cin, description);
+
+    cout << "Enter amount: ";
+    cin >> amount;
+
+    if (amount <= 0) {
+        cout << "Amount must be greater than zero.\n";
+        return 0;
+    }
+
+    ofstream file("expenses.txt", ios::app);
+    file << date << "|" << category << "|"
+         << description << "|" << amount << endl;
+    file.close();
+
+    cout << "Expense saved successfully!\n";
+    return 0;
+}
