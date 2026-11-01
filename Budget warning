@@ -1,0 +1,46 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+int main() {
+    ifstream budgetFile("budget.txt");
+    double budget, total = 0, money;
+    string date, category, description, amount;
+    string month;
+
+    if (!(budgetFile >> budget)) {
+        cout << "Set your budget first.\n";
+        return 0;
+    }
+    budgetFile.close();
+
+    cout << "Enter month (YYYY-MM): ";
+    cin >> month;
+
+    ifstream file("expenses.txt");
+
+    while (getline(file, date, '|')) {
+        getline(file, category, '|');
+        getline(file, description, '|');
+        getline(file, amount);
+
+        if (date.substr(0, 7) == month) {
+            money = stod(amount);
+            total += money;
+        }
+    }
+    file.close();
+
+    cout << "Budget: Rs. " << budget << endl;
+    cout << "Spent: Rs. " << total << endl;
+
+    if (total > budget)
+        cout << "WARNING: Budget exceeded!\n";
+    else if (total >= budget * 0.8)
+        cout << "Warning: You have used at least 80% of your budget.\n";
+    else
+        cout << "You are within your budget.\n";
+
+    return 0;
+}
