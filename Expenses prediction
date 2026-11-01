@@ -1,0 +1,48 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+int main() {
+    ifstream file("expenses.txt");
+    string date, category, description, amount;
+    string month;
+    double total = 0, money, prediction;
+    int daysPassed, daysInMonth;
+
+    cout << "Enter month (YYYY-MM): ";
+    cin >> month;
+
+    cout << "Days passed in this month: ";
+    cin >> daysPassed;
+
+    cout << "Total days in this month (28, 30 or 31): ";
+    cin >> daysInMonth;
+
+    if (daysPassed < 1 || daysPassed > daysInMonth ||
+        daysInMonth > 31) {
+        cout << "Invalid number of days.\n";
+        return 0;
+    }
+
+    while (getline(file, date, '|')) {
+        getline(file, category, '|');
+        getline(file, description, '|');
+        getline(file, amount);
+
+        if (date.substr(0, 7) == month) {
+            money = stod(amount);
+            total += money;
+        }
+    }
+
+    file.close();
+
+    prediction = (total / daysPassed) * daysInMonth;
+
+    cout << "\nSpending so far: Rs. " << total << endl;
+    cout << "Predicted monthly spending: Rs. "
+         << prediction << endl;
+
+    return 0;
+}
