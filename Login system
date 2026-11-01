@@ -1,0 +1,34 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+int main() {
+    string username, password;
+    string name, pass;
+    int found = 0;
+
+    cout << "Username: ";
+    cin >> username;
+
+    cout << "Password: ";
+    cin >> password;
+
+    ifstream file("users.txt");
+
+    while (file >> name >> pass) {
+        if (name == username && pass == password) {
+            found = 1;
+            break;
+        }
+    }
+
+    file.close();
+
+    if (found == 1)
+        cout << "Login successful!\n";
+    else
+        cout << "Invalid username or password.\n";
+
+    return 0;
+}
