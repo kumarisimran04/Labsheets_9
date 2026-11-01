@@ -1,0 +1,21 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+int main() {
+    string username, password;
+
+    cout << "Enter new username: ";
+    cin >> username;
+
+    cout << "Enter new password: ";
+    cin >> password;
+
+    ofstream file("users.txt", ios::app);
+    file << username << " " << password << endl;
+    file.close();
+
+    cout << "Registration successful!\n";
+    return 0;
+}
