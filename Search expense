@@ -1,0 +1,36 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+int main() {
+    ifstream file("expenses.txt");
+    string date, category, description, amount;
+    string searchWord;
+    int found = 0;
+
+    cout << "Enter category or description to search: ";
+    cin >> searchWord;
+
+    while (getline(file, date, '|')) {
+        getline(file, category, '|');
+        getline(file, description, '|');
+        getline(file, amount);
+
+        if (category == searchWord ||
+            description.find(searchWord) != string::npos) {
+            cout << "\nDate: " << date
+                 << "\nCategory: " << category
+                 << "\nDescription: " << description
+                 << "\nAmount: Rs. " << amount << endl;
+            found = 1;
+        }
+    }
+
+    file.close();
+
+    if (found == 0)
+        cout << "No matching expense found.\n";
+
+    return 0;
+}
