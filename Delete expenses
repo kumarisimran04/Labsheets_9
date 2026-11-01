@@ -1,0 +1,48 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+int main() {
+    ifstream file("expenses.txt");
+    ofstream temp("temp.txt");
+
+    string date, category, description, amount;
+    string deleteDate, deleteDescription;
+    int deleted = 0;
+
+    cout << "Enter date of expense (YYYY-MM-DD): ";
+    cin >> deleteDate;
+
+    cin.ignore();
+    cout << "Enter exact description: ";
+    getline(cin, deleteDescription);
+
+    while (getline(file, date, '|')) {
+        getline(file, category, '|');
+        getline(file, description, '|');
+        getline(file, amount);
+
+        if (date == deleteDate &&
+            description == deleteDescription) {
+            deleted++;
+        } else {
+            temp << date << "|" << category << "|"
+                 << description << "|" << amount << endl;
+        }
+    }
+
+    file.close();
+    temp.close();
+
+    if (deleted > 0) {
+        remove("expenses.txt");
+        rename("temp.txt", "expenses.txt");
+        cout << deleted << " expense record(s) deleted.\n";
+    } else {
+        remove("temp.txt");
+        cout << "No matching expense found.\n";
+    }
+
+    return 0;
+}
