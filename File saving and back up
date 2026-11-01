@@ -1,0 +1,29 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+int main() {
+    ifstream file("expenses.txt");
+    ofstream backup("backup_expenses.txt");
+    string line;
+    int count = 0;
+
+    if (!file) {
+        cout << "No expense file found. Add expenses first.\n";
+        return 0;
+    }
+
+    while (getline(file, line)) {
+        backup << line << endl;
+        count++;
+    }
+
+    file.close();
+    backup.close();
+
+    cout << "Backup saved successfully!\n";
+    cout << "Records backed up: " << count << endl;
+
+    return 0;
+}
